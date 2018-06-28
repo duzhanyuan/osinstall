@@ -1,10 +1,20 @@
 ## DEMO
-http://demo.idcos.com:8081/osinstall/#/dashboard/main (建议使用最新版的Google Chrome浏览器访问，以获得最佳体验)
+http://cloudboot.idcos.com/#/login (建议使用最新版的Google Chrome浏览器访问，以获得最佳体验)
+
+user:admin
+
+password:admin
 
 ## Online communication
 QQ群:120556005
 
-Download:http://www.idcos.com/download.html
+Download:http://www.idcos.com/store/cloudboot
+
+## 一键部署安装
+如果没有二次开发的需求，请直接下载RPM包一键安装，几分钟即可搞定。一键部署文档：
+
+http://idcos.github.io/osinstall-doc/environment/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2.html
+
 
 ## Prerequisites
 
@@ -30,7 +40,7 @@ chkconfig mysqld on
 mkdir -p /usr/yunji/
 cd /usr/yunji
 git clone https://github.com/idcos/osinstall-server.git
-mysql -uroot < /usr/yunji/osinstall-server/doc/db/idcos-osinstall.sql
+mysql -uroot < /usr/yunji/osinstall-server/doc/db/cloudboot.sql
 ```
 
 ## 2.Deploy Server
@@ -78,9 +88,11 @@ cd /usr/yunji/osinstall-server/
 
 Configuring database connection:
 ```
-vim bin/idcos-os-install.json
+mkdir /etc/cloudboot-server/
+cp osinstall-server/conf/cloudboot-server.conf /etc/cloudboot-server/cloudboot-server.conf
+vim /etc/cloudboot-server/cloudboot-server.conf
 "repo": {
-    "connection": "user:password@tcp(localhost:3306)/idcos-osinstall?charset=utf8&parseTime=True&loc=Local"
+    "connection": "user:password@tcp(localhost:3306)/cloudboot?charset=utf8&parseTime=True&loc=Local"
 },
 ```
 
@@ -97,7 +109,7 @@ Build and run
 ```
 gb build
 cd ./bin/
-./os-install-server
+./cloudboot-server
 ```
 
 Test
@@ -119,9 +131,9 @@ cd /usr/yunji
 git clone https://github.com/idcos/osinstall-ui.git
 cd /usr/yunji/osinstall-ui/
 npm install
-bower install
 npm install -g ember-cli
 npm install -g bower
+bower install
 ember server --proxy=http://localhost:8083/
 ```
 
